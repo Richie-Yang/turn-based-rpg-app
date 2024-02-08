@@ -6,7 +6,7 @@ Content-Type: application/json
     "name": "John Doe",
     "email": "xxx@abc.com",
     "password": "123",
-    "role": ["admin123"]
+    "role": ["user"]
 }
 ###
 @updateUserId = ga9zf0nglba0

@@ -3,7 +3,7 @@ import { firestore, auth as firebaseAuth } from 'firebase-admin';
 import { CONFIG } from '../../config';
 import { NodeEnv } from '../../variables';
 
-const serviceAccountFilePath = '../../../formica_service_account.json';
+const serviceAccountFilePath = '../../../service_account.json';
 let _DB: firestore.Firestore | undefined;
 let _Auth: firebaseAuth.Auth | undefined;
 

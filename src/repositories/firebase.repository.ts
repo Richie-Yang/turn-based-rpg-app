@@ -18,9 +18,11 @@ export abstract class FirebaseRepository<M extends Base> {
   }
 
   async find(filter?: FilterQuery) {
-    if (filter?.page || filter?.size)
-      return firebaseRepository.findPaged<M>(this.modelName, filter);
     return firebaseRepository.findAll<M>(this.modelName, filter);
+  }
+
+  async findPaged(filter?: FilterQuery) {
+    return firebaseRepository.findPaged<M>(this.modelName, filter);
   }
 
   async findById(id: string) {

@@ -1,0 +1,16 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "endpoint": "http://localhost:5001",
+      "cron-endpoint": "http://localhost:5002"
+    },
+    "dev": {
+      "endpoint": "https://anlene-dev-4mx5bspv6q-de.a.run.app",
+      "cron-endpoint": "https://anlene-dev-cron-4mx5bspv6q-de.a.run.app"
+    },
+    "prod": {
+      "endpoint": "https://anlene-qm6vpuz7aa-de.a.run.app",
+      "cron-endpoint": "https://anlene-cron-qm6vpuz7aa-de.a.run.app"
+    }
+  }
+}

@@ -9,6 +9,10 @@ export class Team extends Base {
   @IsString()
   name: string;
 
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
   @IsEmpty()
   @IsArray()
   layout: Array<number>;

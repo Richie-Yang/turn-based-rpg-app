@@ -17,11 +17,12 @@ import {
   FilterQuery,
   PageResult,
 } from 'src/repositories/firebase/firebase.type';
+import { UserService } from 'src/services';
 
 @Controller('users')
 export class UserController {
   constructor(
-    // private readonly userService: UserService,
+    private readonly userService: UserService,
     @Inject(UserRepository) public userRepository: UserRepository,
   ) {}
 
@@ -40,7 +41,7 @@ export class UserController {
   @Post()
   async createUser(@Body() body: User): Promise<User> {
     const user = new User(body);
-    return this.userRepository.create(user);
+    return this.userService.create(user);
   }
 
   @Patch(':id')

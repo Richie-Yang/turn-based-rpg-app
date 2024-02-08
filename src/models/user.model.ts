@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {
   ArrayContains,
+  ArrayNotContains,
+  Contains,
   IsArray,
   IsEmail,
-  IsEmpty,
   IsNotEmpty,
 } from 'class-validator';
 import { Base } from './base.model';
@@ -20,9 +21,7 @@ export class User extends Base {
   @IsEmail()
   email: string;
 
-  @IsEmpty()
   @IsArray()
-  @ArrayContains(Object.values(Roles))
   role: Roles[];
 
   @IsNotEmpty()
