@@ -19,7 +19,9 @@ import {
   PageResult,
 } from 'src/repositories/firebase/firebase.type';
 import { UserService } from 'src/services';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(
