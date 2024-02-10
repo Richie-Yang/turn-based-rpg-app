@@ -6,9 +6,8 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-
-// TODO: move to .env
-const JWT_SECRET = '123';
+import { CONFIG } from '../config';
+import { User } from 'src/models';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,22 +15,27 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
-    if (!token) throw new UnauthorizedException();
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
 
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: JWT_SECRET,
-      });
-      request['user'] = payload;
-    } catch {
-      throw new UnauthorizedException();
-    }
+    const isAuthenticated =
+      type === 'Bearer'
+        ? await this.isBearerTokenValid(request, token)
+        : this.isAPIKeyValid(request);
+
+    if (!isAuthenticated) throw new UnauthorizedException();
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+  async isBearerTokenValid(request: Request, token: string) {
+    const payload = await this.jwtService.verifyAsync<User>(token, {
+      secret: CONFIG.JWT_SECRET,
+    });
+    if (!payload) return false;
+    request['user'] = payload;
+    return true;
+  }
+
+  isAPIKeyValid(request: Request) {
+    return request.headers.authorization === CONFIG.API_TOKEN;
   }
 }

@@ -1,3 +1,13 @@
+# @name login
+POST {{endpoint}}/users/login
+Content-Type: application/json
+
+{
+    "email": "xxx@abc.com",
+    "password": "P@ssw0rd"
+}
+###
+
 # @name createUser
 POST {{endpoint}}/users
 Content-Type: application/json
@@ -5,7 +15,7 @@ Content-Type: application/json
 {
     "name": "John Doe",
     "email": "xxx@abc.com",
-    "password": "123",
+    "password": "P@ssw0rd",
     "role": ["user"]
 }
 ###
@@ -20,10 +30,11 @@ Content-Type: application/json
 }
 ###
 #
-@findUserId = fgdx83dob4lu
+@findUserId = 11vitox197n5
 # @name getUserById
 GET {{endpoint}}/users/{{findUserId}}
 Content-Type: application/json
+Authorization: 123
 
 ###
 # @name getUsers

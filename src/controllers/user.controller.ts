@@ -19,19 +19,17 @@ import {
   PageResult,
 } from 'src/repositories/firebase/firebase.type';
 import { UserService } from 'src/services';
-import { AuthService } from 'src/services/auth.service';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthService,
     @Inject(UserRepository) public userRepository: UserRepository,
   ) {}
 
   @Post('login')
   login(@Body() body: { email: string; password: string }): Promise<string> {
-    return this.authService.login(body.email, body.password);
+    return this.userService.login(body.email, body.password);
   }
 
   @UseGuards(AuthGuard)
@@ -48,7 +46,6 @@ export class UserController {
     return this.userRepository.find(filter);
   }
 
-  @UseGuards(AuthGuard)
   @Post()
   async createUser(@Body() body: User): Promise<User> {
     const user = new User(body);
