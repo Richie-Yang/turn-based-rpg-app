@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from '../repositories';
 import { User } from 'src/models';
 import { WhereOperator } from 'src/repositories/firebase/firebase.variable';
@@ -19,7 +19,8 @@ export class UserService {
         fieldValue: data.email,
       },
     });
-    if (foundUser.length > 0) throw new Error('User already exists');
+    if (foundUser.length > 0)
+      throw new HttpException('User already exists', 400);
     const salt = bcrypt.genSaltSync(this.DEFAULT_SALT_ROUNDS);
     const hash = bcrypt.hashSync(user.password, salt);
     user.password = hash;
