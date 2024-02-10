@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Base } from 'src/models/base.model';
 import * as firebaseRepository from './firebase';
 import { FilterQuery } from './firebase/firebase.type';
@@ -19,6 +20,11 @@ export abstract class FirebaseRepository<M extends Base> {
 
   async find(filter?: FilterQuery) {
     return firebaseRepository.findAll<M>(this.modelName, filter);
+  }
+
+  async findOne(filter?: FilterQuery) {
+    const users = await this.find(filter);
+    return _.get(users, '[0]', {}) as M;
   }
 
   async findPaged(filter?: FilterQuery) {
